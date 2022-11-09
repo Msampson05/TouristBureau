@@ -106,9 +106,18 @@ let activities = [
 function init() {
     //fill dropdown 
     fillDropdown();
-    // Select button
+    // Select category button
     const selectCategoryButton = document.getElementById("selectCategoryButton");
     selectCategoryButton.onclick = selectCategoryButtonOnClick;
+
+    //Fill Details
+     fillDetails();
+
+    // Select activity 
+    const selectActivityButton = document.getElementById("selectActivityButton");
+    selectActivityButton.onclick = selectActivityButtonOnClick;
+
+   
 
 }
 
@@ -116,6 +125,8 @@ function init() {
 function fillDropdown() {
     const selectActivitySection = document.getElementById("selectActivitySection");
     selectActivitySection.style.visibility = "hidden";
+    categoryDetailsOutput.style.visibility="hidden";
+    
 
     const CategoriesList = document.getElementById("CategoriesList");
     let selectCategoryOption = document.createElement("option");
@@ -133,15 +144,11 @@ function fillDropdown() {
     }
 }
 
-//Create Onclick Function
+//Create Onclick Function for category btn
 function selectCategoryButtonOnClick() {
 
-
-
     const activitiesList = document.getElementById("activitiesList");
-
-
-    //todo: clear this drop down list from previously added entries...
+   activitiesList.options.length = 0
 
     //Add default prompt.
     let selectActivityOption = document.createElement("option");
@@ -150,7 +157,7 @@ function selectCategoryButtonOnClick() {
 
     activitiesList.appendChild(selectActivityOption);
 
-    let selectedCategory = getSelectedCategory;
+    let selectedCategory = getSelectedCategory();
 
     let categoryActivities = getActivitiesForCategory(activities, selectedCategory);
 
@@ -159,7 +166,7 @@ function selectCategoryButtonOnClick() {
 
     for(let i = 0; i < categoryActivitiesLength ; i++){ 
         let newOption = document.createElement("option");
-        newOption.value = categoryActivities[i].id;
+        newOption.value = categoryActivities[i].id; 
         newOption.textContent = categoryActivities[i].name;
         activitiesList.appendChild(newOption);
     }
@@ -168,6 +175,25 @@ function selectCategoryButtonOnClick() {
     const selectActivitySection = document.getElementById("selectActivitySection");
     selectActivitySection.style.visibility = "visible";
 }
+
+function fillDetails(){
+
+    //call category output section
+    const categoryDetailsOutput = document.getElementById("categoryDetailsOutput");
+    
+   
+}
+
+
+function selectActivityButtonOnClick(){
+    categoryDetailsOutput.style.visibility="visible"
+
+}
+
+
+
+
+
 
 function getActivityName(activities, name) {
     let Search = [];
@@ -186,49 +212,38 @@ function getActivityName(activities, name) {
 //this should take a full list of all activities, and a single cateogry name, 
 //and return an array of only the activities that belong to that category.
 function getActivitiesForCategory(activities, category){
-    let categoryActivities = [];
+    
     //todo: fix to return the search matches
 
-    //Create Loop to find the catergory 
-
-      let findActivities = activities.length;
-      for(let i = 0; i < findActivities; i++){
-        
-             if (activities[i].category == category){
-                 categoryActivities.push(activities[i]);
-             }
+    //Create Loop to find the activites of catergory name
+    let activitesLength = activities.length;
+    let categoryActivities = [];
+    
+     for(let i = 0; i < activitesLength; i++){
+     if(activities[i].category == category){
+        categoryActivities.push(activities[i]);
+     }
       }
       return categoryActivities;
-}
-    //  categoryActivities = [
-    //      {
-    //         category: "Adventures",
-    //         id: "A101",
-    //          name: "Valley Hot Air Balloons",
-    //          description: "Enjoy a lovely hot air balloon ride over the valley at sunrise.  Call 800-555-1212 to reserve a date/time after you complete your e-ticket purchase.",
-    //         location: "121 S. Main Street",
-    //          price: 265.00
-    //     },
-    //  {
-    //          category: "Adventures",
-    //         id: "A102",
-    //         name: "River Runners: Float Trip",
-    //          description: "A mellow float trip with lovely scenery, great fishing, just a few riffles, and it finishes back at our base. It is a perfect trip for those wishing to take their time, or those on a limited schedule.",
-    //         location: "145 FM 103",
-    //          price: 65.00
-    //      }
-    //  ];
 
-    
+      
+    }
+
 
 
 function getSelectedCategory(){
+
     const CategoriesList = document.getElementById("CategoriesList");
     return CategoriesList.value;
 }
 
-//
+// function fillDetails(){
 
+//     const categoryDetailsOutput = document.getElementById("categoryDetailsOutput");
+//     categoryDetailsOutput.style.display="hidden"
+// }
 
+// function selectActivityButtonOnClick(){
+//     categoryDetailsOutput.style.display="visible"
 
-//display the activity details
+// }
